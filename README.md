@@ -2,7 +2,7 @@
 
 Consider the Markov chain that is illustrated in the transition graph below:
 
-![](chain.png)
+![](graph.png)
 
 All the states in this chain are recurrent.  If you leave any one state there is a guarantee that you will return to it again at some point in the future.  Furthermore, if you start off in state `j` and you run the chain forward by `n` steps we can introduce a Bernoulli randomm variable that is 1 if we are in state `k` and 0 otherwise.  The p parameter of this Bernoulli random variable will be element `jk` of the `n`-step transition probability matrix. 
 
