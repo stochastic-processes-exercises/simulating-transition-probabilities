@@ -25,7 +25,7 @@ class helper :
 class UnitTests(unittest.TestCase) :
    def test_markov_move(self) :      
        myvars, inputs, variables = np.array([0,1,2]), [], [] 
-       for j in range(5) : 
+       for j in range(3) : 
            exp = np.dot( myp[j,:], myvars )
            var = var = np.dot( myp[j,:], myvars*myvars ) - exp*exp
            for i in range(10):
@@ -55,7 +55,7 @@ class UnitTests(unittest.TestCase) :
            for s in range(3) :
                for e in range(3) :
                    inputs.append((myp,s,nsteps,e,ns,))
-                   p = myprobs[j-1,1]
+                   p = myprobs[s,e]
                    myvar = randomvar( p, variance=p*(1-p)/ns, vmin=0, vmax=1, isinteger=False )
                    variables.append( myvar )
        assert( check_func("test_mean", inputs, variables, modname=helper ) )
@@ -68,7 +68,7 @@ class UnitTests(unittest.TestCase) :
            for s in range(3) :
                for e in range(3) :
                    inputs.append((myp,s,nsteps,e,ns,))
-                   p = myprobs[j-1,1]
+                   p = myprobs[s,e]
                    myvar = randomvar( p, dist="chi2", variance=p*(1-p)/ns, isinteger=False )
                    variables.append( myvar )
        assert( check_func("test_var", inputs, variables, modname=helper ) )
