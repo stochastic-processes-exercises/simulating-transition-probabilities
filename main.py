@@ -4,17 +4,27 @@ import numpy as np
 
 
 def markov_move( trans, start ) :
-
+    myrand, myvar, accum  = np.random.uniform(0,1), 0, trans[start,0]
+    while myrand>accum :
+          myvar = myvar + 1
+          accum = accum + trans[start,myvar]
+    return myvar
 
 def is_transition( trans, start, nsteps, target ) :
-
+    for i in range(nsteps) : start = markov_move( trans, start )
+    if start==target : return 1
+    return 0
 
 def sample_mean( trans, start, nsteps, target, nsamples ) :
-
+    mean = 0
+    for i in range(nsamples) : mean = mean + is_transition( trans, start, nsteps, target )
+    mean = mean / nsamples 
+    var = mean*(1-mean)
+    conf = np.sqrt( var / nsamples )*scipy.stats.norm.ppf(0.95)
     return mean, conf
 
 # Setup the transition matrix here
-A = 
+A = np.array([[0.3,0.5,0.2],[0.3,0.4,0.3],[0.2,0.5,0.3]])
 
 
 # Now estimate some hitting probablities if we start from state 2
