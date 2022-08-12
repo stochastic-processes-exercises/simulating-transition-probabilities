@@ -13,15 +13,6 @@ from main import *
 
 myp = np.array([[0.3,0.5,0.2],[0.3,0.4,0.3],[0.2,0.5,0.3]])
 
-class helper : 
-   def test_mean( probs, start, steps, end, n ) :
-       m, e = sample_mean( probs, start, steps, end, n )
-       return m
- 
-   def test_var( probs, start, steps, end, n ) :
-       m, e = sample_mean( probs, start, steps, end, n )
-       return ( e / scipy.stats.norm.ppf(0.95) )**2 
-
 class UnitTests(unittest.TestCase) :
    def test_markov_move(self) :      
        myvars, inputs, variables = np.array([0,1,2]), [], [] 
@@ -56,19 +47,6 @@ class UnitTests(unittest.TestCase) :
                for e in range(3) :
                    inputs.append((myp,s,nsteps,e,ns,))
                    p = myprobs[s,e]
-                   myvar = randomvar( p, variance=p*(1-p)/ns, vmin=0, vmax=1, isinteger=False )
+                   myvar = randomvar( p, variance=p*(1-p)/ns, dist="uncertainty", dof=ns-1, limit=0.9, vmin=0, vmax=1 )
                    variables.append( myvar )
-       assert( check_func("test_mean", inputs, variables, modname=helper ) )
-
-   def test_var(self) :
-       ns, inputs, variables = 100, [], []
-       for i in range(2,4) :
-           nsteps = i*10
-           myprobs = np.linalg.matrix_power( myp, nsteps )
-           for s in range(3) :
-               for e in range(3) :
-                   inputs.append((myp,s,nsteps,e,ns,))
-                   p = myprobs[s,e]
-                   myvar = randomvar( p, dist="chi2", variance=p*(1-p)/ns, isinteger=False )
-                   variables.append( myvar )
-       assert( check_func("test_var", inputs, variables, modname=helper ) )
+       assert( check_func("sample_mean", inputs, variables ) )
