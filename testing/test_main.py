@@ -21,7 +21,7 @@ class UnitTests(unittest.TestCase) :
            var = var = np.dot( myp[j,:], myvars*myvars ) - exp*exp
            for i in range(10):
                inputs.append((myp,j,))
-               myvar = randomvar( exp, variance=var, vmin=0, vmax=2, isinteger=True )
+               myvar = randomvar( exp, variance=var, vmin=0, vmax=2, isinteger=True, nsamples=100 )
                variables.append( myvar )
 
        assert( check_func("markov_move", inputs, variables ) )
@@ -34,7 +34,7 @@ class UnitTests(unittest.TestCase) :
                for e in range(3) : 
                    inputs.append((myp,s,i,e,))
                    p = myprobs[s,e]
-                   myvar = randomvar( p, variance=p*(1-p), vmin=0, vmax=1, isinteger=True )
+                   myvar = randomvar( p, variance=p*(1-p), vmin=0, vmax=1, isinteger=True, nsamples=100 )
                    variables.append( myvar )
        assert( check_func("is_transition", inputs, variables, calls=["markov_move"] ) )
 
