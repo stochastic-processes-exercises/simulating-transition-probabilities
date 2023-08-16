@@ -1,0 +1,1 @@
+export MPLCONFIGDIR=.lesson && clear && python3 main.py && (echo "CODE EXECUTES OK: RUNNING TESTS" ; echo "" &&  python3 -m unittest discover -s .lesson -f 2> /dev/null && echo "" && echo "ALL TESTS PASSED: NOW HIT SUBMIT")
